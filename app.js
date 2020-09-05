@@ -1,6 +1,7 @@
 class App {
     constructor() {
-      this.notes = [];
+        //JSON.parse transforma un JSON string en un objeto JS
+      this.notes = JSON.parse(localStorage.getItem('notes')) || [];
       this.title = "";
       this.text = "";
       this.id = "";
@@ -18,8 +19,8 @@ class App {
       this.$modalText = document.querySelector('.modal-text');
       this.$modalCloseButton = document.querySelector('.modal-close-button');
       this.$colorTooltip = document.querySelector('#color-tooltip');
-      
-    
+
+      this.render();
       this.addEventListeners();
     } 
     
@@ -28,6 +29,7 @@ class App {
             this.handleFormClick(event);
             this.selectNote(event);
             this.openModal(event);
+            this.deleteNote(event);
         });
 
         document.body.addEventListener('mouseover', event => {
@@ -109,6 +111,8 @@ class App {
         }
 
         openModal(event) {
+            if(event.target.matches('.toolbar-delete')) return;
+
             if(event.target.closest('.note')) {
                 this.$modal.classList.toggle('open-modal');
                 this.$modalTitle.value = this.title;
@@ -141,12 +145,12 @@ class App {
             const newNote = {
                 title: note.title,
                 text: note.text,
-                color: 'white',
+                color: '#E8E8E8',
                 id: this.notes.length > 0 ? this.notes[this.notes.length - 1].id + 1 : 1
             };
 
             this.notes = [...this.notes, newNote];
-            this.displayNotes();
+            this.render();
             this.closeForm();
         }
 
@@ -158,7 +162,7 @@ class App {
                     
             );
 
-            this.displayNotes();
+            this.render();
 
         }
 
@@ -168,7 +172,7 @@ class App {
                     
             );
 
-            this.displayNotes();
+            this.render();
         }
 
         selectNote() {
@@ -178,6 +182,27 @@ class App {
            this.title = $noteTitle.innerText;
            this.text = $noteText.innerText;
            this.id = $selectedNote.dataset.id;
+        }
+
+        deleteNote(event) {
+            event.stopPropagation();
+            if(!event.target.matches('.toolbar-delete')) return;
+            const id = event.target.dataset.id;
+            this.notes = this.notes.filter(note => note.id !== Number(id));
+            this.render();
+        }
+
+        //guarda las notas y las muestra en el browser
+        render() {
+            this.saveNotes();
+            this.displayNotes();
+        }
+
+        saveNotes(){
+            //elegir un par key = 'notes', value = 'this.notes'
+            //JSON.stringfy transforma un objeto JS en un string de JSON
+            localStorage.setItem('notes', JSON.stringify(this.notes));
+            
         }
 
         displayNotes() {
@@ -191,7 +216,7 @@ class App {
                     <div class="toolbar-containter">
                         <div class="toolbar">
                             <i class="fas fa-palette toolbar-color" data-id=${note.id}></i>
-                            <i class="far fa-trash-alt toolbar-delete"></i>
+                            <i class="far fa-trash-alt toolbar-delete" data-id=${note.id}></i>
                         </div>
                     </div>
                 </div>
