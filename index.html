@@ -1,9 +1,17 @@
 <html>
     <head>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,500&display=swap"></link>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
       <link rel="stylesheet" href="style.css"></link>  
     </head>
     <body>
+        <div class="modal">
+            <div class="modal-content">
+                <input class="modal-title" placeholder="Título" type="text">
+                <input class="modal-text" placeholder="Tomar una nota..." type="text">
+                <span class="modal-close-button">Cerrar</span>
+            </div>
+        </div>
        <main>
           <header>
               <img class="header-logo" src="https://www.gstatic.com/images/branding/product/1x/keep_48dp.png">
@@ -21,8 +29,18 @@
           </div>
           <div id="notes"></div>
           <div id="placeholder">
-              <img id="placeholder-logo" src="https://icon.now.sh/lightbulb_outline">
+              <img id="placeholder-logo" src="http://fapc.biz/publications/annualreport/lightbulb.png">
               <p id="placeholder-text">Las notas que hagas aparecerán acá</p>
+          </div>
+          <div id="color-tooltip">
+            <div class="color-option" data-color="#fff" id="white"></div>
+            <div class="color-option" data-color="#fbbc04" id="orange"></div>
+            <div class="color-option" data-color="#597D35" id="green"></div>
+            <div class="color-option" data-color="#a7ffeb" id="teal"></div>
+            <div class="color-option" data-color="#73c2fb" id="maya"></div>
+            <div class="color-option" data-color="#d7aefb" id="purple"></div>
+            <div class="color-option" data-color="#e51a4c" id="crimson"></div>
+            <div class="color-option" data-color="#b22222" id="fire-brick"></div>
           </div>
        </main> 
        <script src="app.js"></script>
