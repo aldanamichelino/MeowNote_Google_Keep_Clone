@@ -6,7 +6,7 @@ class App {
       this.text = "";
       this.id = "";
 
-        //the $ tells the constructor it is working with html elements and not data
+        //el $ le dice al constructor que está trabajando con elementos html y no datos
       this.$placeholder = document.querySelector('#placeholder');
       this.$form = document.querySelector ('#form');
       this.$notes = document.querySelector('#notes');
@@ -24,6 +24,7 @@ class App {
       this.addEventListeners();
     } 
     
+    //---escuchas de eventos---
     addEventListeners() {
         document.body.addEventListener('click', event => {
             this.handleFormClick(event);
@@ -39,10 +40,10 @@ class App {
         document.body.addEventListener('mouseout', event => {
             this.closeTooltip(event);
         });
-
-        //con function() podemos utilizar el elemento asociado al event listener con this, como si fuera una clase
+        
 
         this.$colorTooltip.addEventListener('mouseover', function() {
+            //con function() podemos utilizar el elemento asociado al event listener con this, como si fuera una clase
             this.style.display = 'flex';
         });
 
@@ -57,28 +58,28 @@ class App {
             }
         });
 
-            this.$form.addEventListener('submit', event => {
-                event.preventDefault();
-                const title = this.$noteTitle.value;
-                const text = this.$noteText.value;
-                const hasNote = title || text;
+        this.$form.addEventListener('submit', event => {
+            event.preventDefault();
+            const title = this.$noteTitle.value;
+            const text = this.$noteText.value;
+            const hasNote = title || text;
 
-                if(hasNote) {
-                    this.addNote({ title, text });
-                }
-            });
+            if(hasNote) {
+                this.addNote({ title, text });
+            }
+        });
 
-            this.$formCloseButton.addEventListener('click', event => {
-                event.stopPropagation();
-                this.closeForm();
-            });
+        this.$formCloseButton.addEventListener('click', event => {
+            event.stopPropagation();
+            this.closeForm();
+        });
 
-            this.$modalCloseButton.addEventListener('click', event => {
-                this.closeModal();
-            })
+        this.$modalCloseButton.addEventListener('click', event => {
+            this.closeModal();
+        })
     }
   
-  
+    //---funciones---
         handleFormClick(event) {
             const isFormClicked = this.$form.contains(event.target);
 
@@ -192,8 +193,8 @@ class App {
             this.render();
         }
 
-        //guarda las notas y las muestra en el browser
         render() {
+            //guarda las notas y las muestra en el browser
             this.saveNotes();
             this.displayNotes();
         }
